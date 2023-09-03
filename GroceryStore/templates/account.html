@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1 class="mt-4">Account Information</h1>
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Username: {{ user.username }}</h5>
+      <p class="card-text">Email: {{ user.email }}</p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1 class="mt-4">Cart</h1>
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Username: {{ current_user.username }}</h5>
+      <p class="card-text">Email: {{ current_user.email }}</p>
+      <h5 class="card-title">Cart</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Rate per Unit</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cart_item in current_user.purchases %}
+            <tr>
+              <td>{{ cart_item.name }}</td>
+              <td>{{ cart_item.quantity }}</td>
+              <td>{{ cart_item.rate_per_unit }}</td>
+              <td>{{ cart_item.rate_per_unit * cart_item.quantity }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <h5>Total Amount: {{ total_amount }}</h5>
+      <form method="POST" action="{{ url_for('clean_cart') }}">
+        <button type="submit" class="btn btn-danger">Clear Cart</button>
+      </form>
+      <form method="POST" action="{{ url_for('buy_success') }}">
+        <button type="submit" class="btn btn-primary mt-2">Buy</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

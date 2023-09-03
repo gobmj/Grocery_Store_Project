@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Products</h1>
+  {% if products_by_category %}
+    {% for category, products in products_by_category.items() %}
+      <h3>{{ category.name }}</h3>
+      <div class="row">
+        {% if products %}
+          {% for product in products %}
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">Rate: {{ product.rate_per_unit }}</p>
+                  <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+                    <div class="form-group">
+                      <label for="quantity">Quantity:</label>
+                      <input type="number" name="quantity" class="form-control" min="1" max="{{ product.units }}" required>
+                    </div>
+                    {% if product.units <= 0 %}
+                      <button type="button" class="btn btn-secondary" disabled>Out of Stock</button>
+                    {% else %}
+                      <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    {% endif %}
+                  </form>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Products present in this Category</p>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="col-md-12">
+      <p>No Categories Present</p>
+    </div>
+  {% endif %}
+{% endblock %}

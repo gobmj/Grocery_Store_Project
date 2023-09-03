@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <h2>Manage Products</h2>
+  
+  <h4>Add Product</h4>
+  <form method="POST" action="{{ url_for('manage_products') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.name.label }}
+      {{ form.name(class="form-control") }}
+      {% for error in form.name.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.manufacture_date.label }}
+      {{ form.manufacture_date(class="form-control") }}
+      {% for error in form.manufacture_date.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.expiry_date.label }}
+      {{ form.expiry_date(class="form-control") }}
+      {% for error in form.expiry_date.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.rate_per_unit.label }}
+      {{ form.rate_per_unit(class="form-control") }}
+      {% for error in form.rate_per_unit.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.category.label }}
+      {{ form.category(class="form-control") }}
+      {% for error in form.category.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="form-group">
+      {{ form.units.label }}
+      {{ form.units(class="form-control") }}
+      {% for error in form.units.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Add Product</button>
+  </form>
+
+  <h4>Existing Products</h4>
+  <ul class="list-group">
+    {% for product, category_name in products %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          {{ product.name }} (Category: {{ category_name }})
+          <br>
+          Units: {{ product.units }}
+        </div>
+        <div>
+          <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn btn-sm btn-warning">Edit</a>
+          <form method="POST" action="{{ url_for('delete_product', product_id=product.id) }}">
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

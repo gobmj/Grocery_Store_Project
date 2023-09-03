@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Search Results</h2>
+  <div class="row">
+    {% if products %}
+      {% for product_category in products %}
+        {% set product = product_category[0] %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">Rate: {{ product.rate_per_unit }}</p>
+              <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+                <div class="form-group">
+                  <label for="quantity">Quantity:</label>
+                  <input type="number" name="quantity" class="form-control" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-md-12">
+        <p>No Products found</p>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

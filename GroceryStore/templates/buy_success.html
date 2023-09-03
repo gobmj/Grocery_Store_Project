@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        Purchase successful! Thank you for shopping with us.
+    </div>
+    <p>Continue shopping <a href="{{ url_for('user_products') }}">here</a>.</p>
+{% endblock %}
